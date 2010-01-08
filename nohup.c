@@ -28,16 +28,8 @@ static u_int32_t verbose  = 0;
 static u_int32_t sigquit  = 0;
 static u_int32_t errout   = 0;
 
-/*********************************************************************
- * prototypes
- * */
-
-void     usage(void);
+void      usage(void);
 u_int32_t getint(char*, unsigned int);
-
-/*********************************************************************
- * usage message
- * */
 
 void
 usage(void)
@@ -54,10 +46,6 @@ usage(void)
            prog_name);
     exit(-1);
 }
-
-/*********************************************************************
- * Parse string -> int
- * */
 
 u_int32_t
 getint(char *str, unsigned int base)
@@ -77,9 +65,6 @@ getint(char *str, unsigned int base)
     RETURN (u_int32_t)l;
 }
 
-/*********************************************************************
- */
-
 int
 main(int argc, char **argv)
 {
@@ -88,16 +73,10 @@ main(int argc, char **argv)
 
     ENTER;
 
-    /*****************************************************************
-     * parse options 
-     * */
     prog_name = argv[0];
-    if(argc < 2)
-    {
-        usage();
-    }
+    if(argc < 2) usage();
+
     while((opt = getopt(argc, argv, "+vhqen:")) != -1)
-    {
         switch(opt)
         {
             case 'v':
@@ -120,7 +99,6 @@ main(int argc, char **argv)
             default:
                 usage();
         }
-    }
 
     argv += optind; argc -= optind;
     if(verbose)
@@ -132,9 +110,10 @@ main(int argc, char **argv)
         fprintf(stderr, "\n");
         fprintf(stderr, "niceness: %d\n", niceness);
     }
+
     /*****************************************************************
      * install signal handlers for SIGHUP and nice ourselves if req'd.
-     * */
+     **/
 
     sa.sa_handler = SIG_IGN;
     sigemptyset(&sa.sa_mask);
@@ -145,13 +124,10 @@ main(int argc, char **argv)
         perror("sigaction");
         exit(-1);
     }
-    if(sigquit)
+    if(sigquit && (sigaction(SIGQUIT, &sa, NULL) != 0))
     {
-        if(sigaction(SIGQUIT, &sa, NULL) != 0)
-        {
-            perror("sigaction");
-            exit(-1);
-        }
+        perror("sigaction");
+        exit(-1);
     }
     if(nice(niceness) < 0)
     {
@@ -161,7 +137,7 @@ main(int argc, char **argv)
 
     /*****************************************************************
      * swizzle stdout & stderr
-     * */
+     **/
 
     if(freopen("nohup.out", "a+", stdout) == NULL)
     {
@@ -178,16 +154,14 @@ main(int argc, char **argv)
     {
         fprintf(stderr, "execvp: '%s'\n", argv[0]);
         while(argc-- > 0)
-        {
             fprintf(stderr, "[%d: '%s']", argc, argv[argc]);
-        }
         fprintf(stderr, "\n");
         fflush(NULL); 
     }
 
     /*****************************************************************
      * do the exec
-     * */
+     **/
 
     execvp(argv[0], argv);
 

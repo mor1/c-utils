@@ -19,11 +19,8 @@
 #include <string.h>
 #include <signal.h>
 
-#if   defined(__svr4__)
-#elif defined(__linux__)
-#  include <sys/time.h>
-#  define uint32_t u_int32_t
-#endif
+#include <sys/time.h>
+#define uint32_t u_int32_t
 
 //#define _TRACE_
 #include "trc.h"
@@ -51,7 +48,7 @@ sig_usr2(int signum __attribute__((unused)))
 {
     if(--nprocs < 1)
     {
-	nprocs = 1;
+        nprocs = 1;
     }
 }
 

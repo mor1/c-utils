@@ -13,6 +13,8 @@
 int
 main(int argc, char **argv)
 {
+    int i;
+
     if((argc != 4) ||
        ((atoi(argv[1]) >= atoi(argv[2])) && (atoi(argv[3]) > 0)) ||
        ((atoi(argv[1]) <= atoi(argv[2])) && (atoi(argv[3]) < 0)))
@@ -22,24 +24,13 @@ main(int argc, char **argv)
                 argv[0]);
         exit(1);
     }
+
+    if(atoi(argv[3]) > 0)
+        for(i = atoi(argv[1]); i < atoi(argv[2]); i += atoi(argv[3]))
+            printf("%d ", i);
     else
-    {
-        int i;
-        if(atoi(argv[3]) > 0)
-        {
-            for( i=atoi(argv[1]); i < atoi(argv[2]); i+=atoi(argv[3]) )
-            {
-                printf("%d ", i);
-            }
-        }
-        else
-        {
-            for( i=atoi(argv[1]); i > atoi(argv[2]); i+=atoi(argv[3]) )
-            {
-                printf("%d ", i);
-            }
-        }
-    }
+        for(i = atoi(argv[1]); i > atoi(argv[2]); i += atoi(argv[3]) )
+            printf("%d ", i);
 	
     exit(0);
 }
