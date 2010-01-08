@@ -35,7 +35,7 @@ void sig_usr2(int);
 /*********************************************************************
  * SIGUSR1/2 handlers : USR1 increments <nprocs>; USR2 decrements
  * <nprocs>
- * */
+ **/
 
 void
 sig_usr1(int signum __attribute__((unused)))
@@ -107,7 +107,7 @@ main(int argc, char **argv)
     /*****************************************************************
      * main loop : ensure that whilst we still have procs. to run, we
      * keep <n> running. 
-     * */
+     **/
 
 reload:
     while((argc > 0) && (n < nprocs))
@@ -126,7 +126,7 @@ reload:
 
             /*********************************************************
              * child : construct argv[] for execvp()
-             * */
+             **/
             l = strlen(argv[0]);
             if((c_argv = (char**)malloc(l*sizeof(char*))) == NULL)
             {
@@ -148,7 +148,7 @@ reload:
 
             /*********************************************************
              * child : swizzle stdout & stderr
-             * */
+             **/
             sprintf(stdout_path, "%s.%lu.%lu.%d.stdout", 
                     prog_name, tv.tv_sec, tv.tv_usec, (int)getpid());
             sprintf(stderr_path, "%s.%lu.%lu.%d.stderr", 
@@ -174,7 +174,7 @@ reload:
 
             /*********************************************************
              * child : do the exec
-             * */
+             **/
             execvp(c_argv[0], c_argv);
             perror(c_argv[0]);
 	    
@@ -185,7 +185,7 @@ reload:
             /*********************************************************
              * parent : keep track of number running and number still
              * to do
-             * */
+             **/
             n++; argc--; argv++;
             fprintf(stdout, 
                     "parent [%d] : forked [%d]; active=%d [max=%d]; left=%d\n",
@@ -195,7 +195,7 @@ reload:
 
     /*****************************************************************
      * main loop : wait for a child to complete
-     * */
+     **/
 
 reap:
     fflush(NULL);
@@ -247,7 +247,7 @@ reap:
     /*****************************************************************
      * main loop : if still more to run, do so, otherwise reap
      * remaining children
-     * */
+     **/
 
     if(argc > 0)
     {
