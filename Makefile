@@ -6,7 +6,7 @@ CFLAGS  = \
 	-Wwrite-strings -Wstrict-prototypes -Wmissing-prototypes	\
 	-Wmissing-declarations -Wnested-externs -Wredundant-decls
 
-EXECS = glob nohup range # loadup
+EXECS = glob loadup nohup range 
 
 all: $(EXECS)
 install: $(EXECS)

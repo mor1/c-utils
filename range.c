@@ -26,11 +26,14 @@ main(int argc, char **argv)
     }
 
     if(atoi(argv[3]) > 0)
+    {
         for(i = atoi(argv[1]); i < atoi(argv[2]); i += atoi(argv[3]))
             printf("%d ", i);
+    }
     else
+    {
         for(i = atoi(argv[1]); i > atoi(argv[2]); i += atoi(argv[3]) )
             printf("%d ", i);
-	
+	}
     exit(0);
 }

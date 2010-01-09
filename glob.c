@@ -28,12 +28,16 @@ main(int argc, char **argv)
     }
 
     for(i=1; i < (unsigned)argc; i++)
+    {
         glob(argv[i], 
              GLOB_NOSORT | GLOB_BRACE | GLOB_NOMAGIC | GLOB_TILDE | 
              ((i>1)?GLOB_APPEND:0), 
              NULL, &globbuf);
+    }
     for(i=0; i < globbuf.gl_pathc; i++)
+    {
         printf("%s ", globbuf.gl_pathv[i]);
+    }
     printf("\n");
 
     globfree(&globbuf);

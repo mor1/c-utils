@@ -1,7 +1,7 @@
 /***********************************************************************
  * 
- * Ensure <n> processes are kept running, from list given on
- * cmd. line.  Use to load up multi-CPU machines.
+ * Ensure <n> processes are kept running, from list given on command
+ * line.  Use to load up multi-CPU machines.
  *
  * Copyright (C) 2000 Richard Mortier <mort@cantab.net>.  All Rights
  * Reserved.
@@ -46,10 +46,7 @@ sig_usr1(int signum __attribute__((unused)))
 void
 sig_usr2(int signum __attribute__((unused)))
 {
-    if(--nprocs < 1)
-    {
-        nprocs = 1;
-    }
+    if(--nprocs < 1) nprocs = 1;
 }
 
 /*********************************************************************
@@ -89,7 +86,7 @@ main(int argc, char **argv)
     /* install signal handlers for USR1/2 */
     sa.sa_handler = sig_usr1;
     sigemptyset(&sa.sa_mask);
-    sa.sa_flags   = 0;
+    sa.sa_flags = 0;
     if(sigaction(SIGUSR1, &sa, NULL) != 0)
     {
         perror("sigaction");
@@ -97,7 +94,7 @@ main(int argc, char **argv)
     }
     sa.sa_handler = sig_usr2;
     sigemptyset(&sa.sa_mask);
-    sa.sa_flags   = 0;
+    sa.sa_flags = 0;
     if(sigaction(SIGUSR2, &sa, NULL) != 0)
     {
         perror("sigaction");
@@ -105,8 +102,8 @@ main(int argc, char **argv)
     }
 
     /*****************************************************************
-     * main loop : ensure that whilst we still have procs. to run, we
-     * keep <n> running. 
+     * main loop : ensure that whilst we still have commands to run,
+     * we keep <n> running.
      **/
 
 reload:
@@ -138,11 +135,9 @@ reload:
             c = argv[0];
             while(c <= argv[0]+l)
             {
-                while(*c == ' ')
-                    c++;
+                while(*c == ' ') c++;
                 c_argv[i++] = c++;
-                while(*c != ' ')
-                    c++;
+                while(*c != ' ') c++;
                 *c++ = '\0';
             }
 
@@ -150,9 +145,9 @@ reload:
              * child : swizzle stdout & stderr
              **/
             sprintf(stdout_path, "%s.%lu.%lu.%d.stdout", 
-                    prog_name, tv.tv_sec, tv.tv_usec, (int)getpid());
+                    prog_name, (unsigned long)tv.tv_sec, (unsigned long)tv.tv_usec, (int)getpid());
             sprintf(stderr_path, "%s.%lu.%lu.%d.stderr", 
-                    prog_name, tv.tv_sec, tv.tv_usec, (int)getpid());
+                    prog_name, (unsigned long)tv.tv_sec, (unsigned long)tv.tv_usec, (int)getpid());
 
             TRC("stdout: '%s'\n", stdout_path);
             TRC("stderr: '%s'\n", stderr_path);

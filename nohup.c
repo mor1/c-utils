@@ -22,7 +22,7 @@
 //#define _TRACE_
 #include "trc.h"
 
-static char    *prog_name;
+static char     *prog_name;
 static u_int32_t niceness = 0;
 static u_int32_t verbose  = 0;
 static u_int32_t sigquit  = 0;
@@ -77,6 +77,7 @@ main(int argc, char **argv)
     if(argc < 2) usage();
 
     while((opt = getopt(argc, argv, "+vhqen:")) != -1)
+    {
         switch(opt)
         {
             case 'v':
@@ -99,7 +100,7 @@ main(int argc, char **argv)
             default:
                 usage();
         }
-
+    }
     argv += optind; argc -= optind;
     if(verbose)
     {
@@ -164,7 +165,6 @@ main(int argc, char **argv)
      **/
 
     execvp(argv[0], argv);
-
     perror(argv[0]);
     RETURN 0;
 }
