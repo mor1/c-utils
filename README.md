@@ -22,7 +22,8 @@ Replacement for the poxy GNU `nohup` script which annoyed me for some
 reason at some point.
 
 
-seq
----
+range
+-----
 
-Reimplementation of the classic `seq` utility.
+Implementation of Python's `range` builtin, before I found out about
+`seq` or, on BSD-like OSes, e.g., OSX, `jot`.
